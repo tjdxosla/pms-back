@@ -25,19 +25,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "사용자", description = "사용자 관리 API")
+public class UserController {
 
     private final UserService userService;
 
     @PostMapping
     @Operation(summary = "사용자 생성", description = "새로운 사용자를 생성합니다.")
-    @ApiResponses(value = { 
-            @ApiResponse(responseCode = "201", description = "사용자 생성 성공", 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "사용자 생성 성공",
                     content = @Content(schema = @Schema(implementation = UserResponse.class))),
-            @ApiResponse(responseCode = "400", description = "잘못된 요청", 
+            @ApiResponse(responseCode = "400", description = "잘못된 요청",
                     content = @Content(schema = @Schema(implementation = Object.class)))
     })
     public ResponseEntity<UserResponse> createUser(
-            @Parameter(description = "사용자 생성 요청 정보", required = true, 
+            @Parameter(description = "사용자 생성 요청 정보", required = true,
                     schema = @Schema(implementation = UserCreateRequest.class))
             @Valid @RequestBody UserCreateRequest request) {
         log.info("사용자 생성 요청: {}", request.getUsername());
